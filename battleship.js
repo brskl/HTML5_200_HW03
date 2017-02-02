@@ -1,6 +1,5 @@
 var model = {
 	boardSize: 7,
-	numShips: 3,
 	shipLength: 3,
 	shipsSunk: 0,
 	
@@ -20,7 +19,7 @@ var model = {
 */
 
 	fire: function(guess) {
-		for (var i = 0; i < this.numShips; i++) {
+		for (var i = 0; i < this.ships.length; i++) {
 			var ship = this.ships[i];
 			var index = ship.locations.indexOf(guess);
 
@@ -57,7 +56,7 @@ var model = {
 
 	generateShipLocations: function() {
 		var locations;
-		for (var i = 0; i < this.numShips; i++) {
+		for (var i = 0; i < this.ships.length; i++) {
 			do {
 				locations = this.generateShip();
 			} while (this.collision(locations));
@@ -91,7 +90,7 @@ var model = {
 	},
 
 	collision: function(locations) {
-		for (var i = 0; i < this.numShips; i++) {
+		for (var i = 0; i < this.ships.length; i++) {
 			var ship = this.ships[i];
 			for (var j = 0; j < locations.length; j++) {
 				if (ship.locations.indexOf(locations[j]) >= 0) {
@@ -131,7 +130,7 @@ var controller = {
 		if (location) {
 			this.guesses++;
 			var hit = model.fire(location);
-			if (hit && model.shipsSunk === model.numShips) {
+			if (hit && model.shipsSunk === model.ships.length) {
 					view.displayMessage("You sank all my battleships, in " + this.guesses + " guesses");
 			}
 		}
