@@ -3,9 +3,9 @@ var model = {
 	shipsSunk: 0,
 	
 	ships: [
-		{ locations: [0, 0, 0], hits: ["", "", ""] },
-		{ locations: [0, 0, 0], hits: ["", "", ""] },
-		{ locations: [0, 0, 0], hits: ["", "", ""] }
+		{ locations: [0, 0, 0], hits: ["", "", ""], name: "Destroyer Ohio" },
+		{ locations: [0, 0, 0], hits: ["", "", ""], name: "Destroyer Mississippi" },
+		{ locations: [0, 0, 0], hits: ["", "", ""], name: "Destroyer Maine" }
 	],
 
 // original hard-coded values for ship locations
@@ -33,7 +33,7 @@ var model = {
 				view.displayMessage("HIT!");
 
 				if (this.isSunk(ship)) {
-					view.displayMessage("You sank my battleship!");
+					view.displayMessage("You sank my battleship! " + ship.name);
 					this.shipsSunk++;
 				}
 				return true;
