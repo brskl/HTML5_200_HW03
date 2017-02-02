@@ -1,6 +1,5 @@
 var model = {
 	boardSize: 7,
-	shipLength: 3,
 	shipsSunk: 0,
 	
 	ships: [
@@ -46,7 +45,7 @@ var model = {
 	},
 
 	isSunk: function(ship) {
-		for (var i = 0; i < this.shipLength; i++)  {
+		for (var i = 0; i < ship.locations.length; i++)  {
 			if (ship.hits[i] !== "hit") {
 				return false;
 			}
@@ -58,7 +57,7 @@ var model = {
 		var locations;
 		for (var i = 0; i < this.ships.length; i++) {
 			do {
-				locations = this.generateShip();
+				locations = this.generateShip(this.ships[i].locations.length);
 			} while (this.collision(locations));
 			this.ships[i].locations = locations;
 		}
@@ -66,20 +65,20 @@ var model = {
 		console.log(this.ships);
 	},
 
-	generateShip: function() {
+	generateShip: function(shipLength) {
 		var direction = Math.floor(Math.random() * 2);
 		var row, col;
 
 		if (direction === 1) { // horizontal
 			row = Math.floor(Math.random() * this.boardSize);
-			col = Math.floor(Math.random() * (this.boardSize - this.shipLength + 1));
+			col = Math.floor(Math.random() * (this.boardSize - shipLength + 1));
 		} else { // vertical
-			row = Math.floor(Math.random() * (this.boardSize - this.shipLength + 1));
+			row = Math.floor(Math.random() * (this.boardSize - shipLength + 1));
 			col = Math.floor(Math.random() * this.boardSize);
 		}
 
 		var newShipLocations = [];
-		for (var i = 0; i < this.shipLength; i++) {
+		for (var i = 0; i < shipLength; i++) {
 			if (direction === 1) {
 				newShipLocations.push(row + "" + (col + i));
 			} else {
