@@ -3,9 +3,10 @@ var model = {
 	shipsSunk: 0,
 	
 	ships: [
-		{ locations: [0, 0, 0], hits: ["", "", ""], name: "Destroyer Ohio" },
-		{ locations: [0, 0, 0], hits: ["", "", ""], name: "Destroyer Mississippi" },
-		{ locations: [0, 0, 0], hits: ["", "", ""], name: "Destroyer Maine" }
+		{ locations: [0, 0, 0, 0], hits: ["", "", "", ""], name: "Battleship Mississippi" },
+		{ locations: [0, 0, 0],    hits: ["", "", ""],     name: "Cruiser Ohio" },
+        { locations: [0, 0, 0],    hits: ["", "", ""],     name: "Cruiser Maine" },
+        { locations: [0, 0],       hits: ["", ""],         name: "Destroyer Florida" }
 	],
 
 // original hard-coded values for ship locations
