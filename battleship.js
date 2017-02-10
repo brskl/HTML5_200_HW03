@@ -20,8 +20,7 @@ var model = {
       ],
 
 	fire: function(guess) {
-		for (var i = 0; i < this.ships.length; i++) {
-			var ship = this.ships[i];
+		for (var ship of this.ships) {
 			var index = ship.locations.indexOf(guess);
 
 			// here's an improvement! Check to see if the ship
@@ -47,8 +46,8 @@ var model = {
 	},
 
 	isSunk: function(ship) {
-		for (var i = 0; i < ship.locations.length; i++)  {
-			if (ship.hits[i] !== "hit") {
+		for (h of ship.hits)  {
+			if (h !== "hit") {
 				return false;
 			}
 		}
@@ -57,11 +56,11 @@ var model = {
 
 	generateShipLocations: function() {
 		var locations;
-		for (var i = 0; i < this.ships.length; i++) {
+		for (var ship of this.ships) {
 			do {
-				locations = this.generateShip(this.ships[i].hits.length);
+				locations = this.generateShip(ship.hits.length);
 			} while (this.collision(locations));
-			this.ships[i].locations = locations;
+			ship.locations = locations;
 		}
 		console.log("Ships array: ");
 		console.log(this.ships);
@@ -91,8 +90,7 @@ var model = {
 	},
 
 	collision: function(locations) {
-		for (var i = 0; i < this.ships.length; i++) {
-			var ship = this.ships[i];
+		for (var ship of this.ships) {
             if (ship.locations != null) {
 			   for (var j = 0; j < locations.length; j++) {
 		            if (ship.locations.indexOf(locations[j]) >= 0) {
