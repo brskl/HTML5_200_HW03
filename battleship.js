@@ -4,7 +4,7 @@ function Ship(size, name) {
   this.locations = null;
   this.hits = new Array(size);
   for (var i = 0; i < size; i++) {
-    this.hits[i] = "";
+    this.hits[i] = false
   }
 }
 
@@ -29,7 +29,7 @@ var model = {
 				view.displayMessage("Oops, you already hit that location!");
 				return true;
 			} else if (index >= 0) {
-				ship.hits[index] = "hit";
+				ship.hits[index] = true;
 				view.displayHit(guess);
 				view.displayMessage("HIT!");
 
@@ -47,7 +47,7 @@ var model = {
 
 	isSunk: function(ship) {
 		for (h of ship.hits)  {
-			if (h !== "hit") {
+			if (!h) {
 				return false;
 			}
 		}
