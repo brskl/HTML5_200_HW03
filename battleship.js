@@ -1,22 +1,23 @@
+// Move into model if possible
+function Ship(size, name) {
+  this.name = name;
+  this.locations = null;
+  this.hits = new Array(size);
+  for (var i = 0; i < size; i++) {
+    this.hits[i] = "";
+  }
+}
+
 var model = {
 	boardSize: 7,
 	shipsSunk: 0,
-	
-	ships: [
-		{ locations: [0, 0, 0, 0], hits: ["", "", "", ""], name: "Battleship Mississippi" },
-		{ locations: [0, 0, 0],    hits: ["", "", ""],     name: "Cruiser Ohio" },
-        { locations: [0, 0, 0],    hits: ["", "", ""],     name: "Cruiser Maine" },
-        { locations: [0, 0],       hits: ["", ""],         name: "Destroyer Florida" }
-	],
 
-// original hard-coded values for ship locations
-/*
 	ships: [
-		{ locations: ["06", "16", "26"], hits: ["", "", ""] },
-		{ locations: ["24", "34", "44"], hits: ["", "", ""] },
-		{ locations: ["10", "11", "12"], hits: ["", "", ""] }
-	],
-*/
+      new Ship(4, "Battleship Mississippi"),
+      new Ship(3, "Cruiser Ohio"),
+      new Ship(3, "Cruiser Maine"),
+      new Ship(2, "Destroyer Florida")
+      ],
 
 	fire: function(guess) {
 		for (var i = 0; i < this.ships.length; i++) {
@@ -58,7 +59,7 @@ var model = {
 		var locations;
 		for (var i = 0; i < this.ships.length; i++) {
 			do {
-				locations = this.generateShip(this.ships[i].locations.length);
+				locations = this.generateShip(this.ships[i].hits.length);
 			} while (this.collision(locations));
 			this.ships[i].locations = locations;
 		}
@@ -92,9 +93,11 @@ var model = {
 	collision: function(locations) {
 		for (var i = 0; i < this.ships.length; i++) {
 			var ship = this.ships[i];
-			for (var j = 0; j < locations.length; j++) {
-				if (ship.locations.indexOf(locations[j]) >= 0) {
-					return true;
+            if (ship.locations != null) {
+			   for (var j = 0; j < locations.length; j++) {
+		            if (ship.locations.indexOf(locations[j]) >= 0) {
+					   return true;
+                    }
 				}
 			}
 		}
