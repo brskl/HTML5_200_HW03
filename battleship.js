@@ -23,12 +23,7 @@ var model = {
 		for (var ship of this.ships) {
 			var index = ship.locations.indexOf(guess);
 
-			// here's an improvement! Check to see if the ship
-			// has already been hit, message the user, and return true.
-			if (ship.hits[index] === "hit") {
-				view.displayMessage("Oops, you already hit that location!");
-				return true;
-			} else if (index >= 0) {
+			if (index >= 0) {
 				ship.hits[index] = true;
 				view.displayHit(guess);
 				view.displayMessage("HIT!");
@@ -119,7 +114,13 @@ var view = {
 	displayMiss: function(location) {
 		var cell = document.getElementById(location);
 		cell.setAttribute("class", "miss");
-	}
+	},
+
+    alreadyGuessed: function(location) {
+        var cell = document.getElementById(location);
+        return ((cell.getAttribute("class") === "hit") ||
+                (cell.getAttribute("class") === "miss"));
+    }
 
 }; 
 
@@ -129,11 +130,15 @@ var controller = {
 	processGuess: function(guess) {
 		var location = parseGuess(guess);
 		if (location) {
-			this.guesses++;
-			var hit = model.fire(location);
-			if (hit && model.shipsSunk === model.ships.length) {
-					view.displayMessage("You sank all my battleships, in " + this.guesses + " guesses");
-			}
+            if (view.alreadyGuessed(location)) {
+                view.displayMessage("Oops, you already guessed that location!");
+            } else {
+		        this.guesses++;
+                var hit = model.fire(location);
+		        if (hit && model.shipsSunk === model.ships.length) {
+                    view.displayMessage("You sank all my battleships, in " + this.guesses + " guesses");
+		        }
+            }
 		}
 	}
 }
